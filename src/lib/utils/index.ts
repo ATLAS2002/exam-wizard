@@ -30,13 +30,23 @@ export function breakWords(sentence: string, lines: number): string {
   return finalString;
 }
 
-export function getInitials(word: string, limit = 3): string {
+const defaultOptions = {
+  limit: 3,
+  separator: "",
+  startFrom: 0,
+};
+
+export function getInitials(
+  word: string,
+  options?: Partial<typeof defaultOptions>,
+): string {
+  const { limit, separator, startFrom } = { ...defaultOptions, ...options };
   return word
     .trim()
     .split(" ")
     .map((part) => part[0]?.toUpperCase())
-    .join("")
-    .slice(0, limit);
+    .join(separator)
+    .slice(startFrom + separator.length, limit + 2 * separator.length);
 }
 
 export * from "./util.adapter";

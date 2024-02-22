@@ -7,7 +7,7 @@ import {
   type Dispatch,
   type ReactNode,
 } from "react";
-import { useQueryParams } from "~/hooks/search-params";
+// import { useQueryParams } from "~/hooks/url";
 import { RoleType } from "~/types";
 
 interface ProfileProps {
@@ -28,7 +28,7 @@ export const ProfileContext = createContext<{
 } | null>(null);
 
 export const ProfileProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const { setQueryParams } = useQueryParams();
+  // const { setQueryParams } = useQueryParams();
 
   const [fields, setFields] = useReducer(
     (

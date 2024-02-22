@@ -51,7 +51,7 @@ AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 type ProfilePictureProps = {
   src: string | undefined;
   fallback: string;
-  className?: string;
+  fallbackStyles?: string;
 };
 
 const ProfilePicture: FCProps<ProfilePictureProps> = ({
@@ -59,10 +59,13 @@ const ProfilePicture: FCProps<ProfilePictureProps> = ({
   fallback,
   children,
   className,
+  fallbackStyles,
 }) => (
   <Avatar className={className}>
     <AvatarImage src={src} />
-    <AvatarFallback className="bg-stone-800 font-code text-white">
+    <AvatarFallback
+      className={cn("bg-stone-800 font-code text-white", fallbackStyles)}
+    >
       {children ?? fallback}
     </AvatarFallback>
   </Avatar>

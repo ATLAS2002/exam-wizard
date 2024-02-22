@@ -4,7 +4,7 @@ import { CalendarDays, ClipboardPenLine, Home, Rocket } from "lucide-react";
 
 export const Cards = () => {
   return (
-    <div className="flex h-1/4 gap-2 pb-6 pl-4 pr-6 pt-2">
+    <div className="flex h-1/4 gap-3 pb-6">
       <Card
         title="Roles"
         description="assign roles to faculty members."
@@ -46,7 +46,7 @@ export const Card: FCProps<{ title: string; description: string }> = ({
   return (
     <div
       className={cn(
-        "flex h-full w-1/4 items-center gap-4 rounded-lg px-4 opacity-60",
+        "flex h-full w-1/4 items-center gap-4 rounded-lg px-4 opacity-60 transition hover:scale-105 motion-safe:duration-300",
         className,
       )}
     >

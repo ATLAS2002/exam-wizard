@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import type { Dispatch, FC, ReactNode, SetStateAction } from "react";
 import type { NextRequest, NextResponse } from "next/server";
 import type { EmailConfig } from "next-auth/providers/email";
 
@@ -8,6 +8,13 @@ export type FCProps<T = unknown> = FC<
     className?: string;
   } & T
 >;
+
+export type State<TValue, THandler> = {
+  value: TValue;
+  handler: THandler;
+};
+
+export type StateDispatcher<T> = Dispatch<SetStateAction<T>>;
 
 export type NextRouteHandler = (req: NextRequest, res: NextResponse) => unknown;
 

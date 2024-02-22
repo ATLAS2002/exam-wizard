@@ -13,6 +13,9 @@ import ConvexAdapter from "./convexAdapter";
 
 export const options: AuthOptions = {
   secret: env.NEXTAUTH_SECRET,
+  // pages: {
+  //   signIn: "/auth",
+  // },
   session: {
     strategy: "jwt",
   },
@@ -22,21 +25,21 @@ export const options: AuthOptions = {
     GoogleProvider(getGoogleUserConfig()),
     LinkedinProvider(getLinkedinUserConfig()),
   ],
-  callbacks: {
-    jwt: ({ token, user }) => {
-      if (user) {
-        token.role = user.role;
-        token.college = user.college;
-      }
-      return token;
-    },
-    session: ({ session, token }) => {
-      session.user.role = token.role;
-      session.user.college = token.college;
+  // callbacks: {
+  //   jwt: ({ token, user }) => {
+  //     if (user) {
+  //       token.role = user.role;
+  //       token.college = user.college;
+  //     }
+  //     return token;
+  //   },
+  //   session: ({ session, token }) => {
+  //     session.user.role = token.role;
+  //     session.user.college = token.college;
 
-      return session;
-    },
-  },
+  //     return session;
+  //   },
+  // },
 };
 
 export const getCurrentUser = async () => {

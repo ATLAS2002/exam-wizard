@@ -1,6 +1,7 @@
 "use client";
 
-import { type FC, type ReactNode, createContext, useState } from "react";
+import { createContext, useState } from "react";
+import type { FCProps } from "~/types";
 
 export interface RoleContextProps {
   active: number;
@@ -10,7 +11,7 @@ export interface RoleContextProps {
 
 export const RoleContext = createContext<RoleContextProps | null>(null);
 
-export const RoleProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const RoleProvider: FCProps = ({ children }) => {
   const [active, setActive] = useState<number>(1);
   const [lastTouched, setLastTouched] = useState<number>(1);
 

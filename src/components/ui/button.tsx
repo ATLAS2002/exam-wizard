@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -26,12 +27,16 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        spring:
+          "border-b-4 text-white font-regular text-xl relative transition hover:brightness-90 active:border-0 active:pb-7 active:mt-1 motion-safe:duration-300",
+        none: "",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        none: "w-fit",
       },
     },
     defaultVariants: {
@@ -45,17 +50,37 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  href?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, children, href, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
+    if (href) {
+      return (
+        <Link href={href}>
+          <Comp
+            className={cn(buttonVariants({ variant, size, className }))}
+            ref={ref}
+            {...props}
+          >
+            {children}
+          </Comp>
+        </Link>
+      );
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {children}
+      </Comp>
     );
   },
 );
@@ -64,6 +89,7 @@ Button.displayName = "Button";
 interface SmartButtonProps extends ButtonProps {
   hoverText?: React.ReactNode;
   tooltipStyles?: string;
+  side?: "top" | "left" | "right" | "bottom";
 }
 
 const SmartButton: React.FC<SmartButtonProps> = ({
@@ -73,6 +99,7 @@ const SmartButton: React.FC<SmartButtonProps> = ({
   variant,
   size,
   className,
+  side = "top",
   ...props
 }) => {
   return (
@@ -86,7 +113,8 @@ const SmartButton: React.FC<SmartButtonProps> = ({
         </TooltipTrigger>
         {hoverText && (
           <TooltipContent
-            className={cn(tooltipStyles, "h-fit w-fit px-2 py-0 lowercase")}
+            side={side}
+            className={cn("h-fit w-fit px-2 py-0 lowercase", tooltipStyles)}
           >
             <code className="text-[70%]">{hoverText}</code>
           </TooltipContent>

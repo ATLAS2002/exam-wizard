@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import type { User } from "next-auth";
 import { ProfilePicture } from "./ui/avatar";
 import type { FCProps } from "~/types";
@@ -21,14 +22,13 @@ import {
   Building,
   BadgeCheck,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { Badge } from "./ui/badge";
 
 export const Header: FCProps<{
   user: User;
 }> = ({ user: { name, role, image } }) => {
   return (
-    <aside className="flex h-20 w-full flex-row-reverse items-center pr-2 shadow-lg">
+    <header className="flex h-20 w-full flex-row-reverse items-center pr-2 shadow-lg">
       <DropdownMenu>
         <DropdownMenuTrigger className="no-border group" asChild>
           <button className="flex w-fit rounded-lg px-4 py-2 transition hover:bg-stone-300 group-focus-visible:bg-stone-300 motion-safe:duration-300">
@@ -78,6 +78,6 @@ export const Header: FCProps<{
       <div className="mx-2 h-12 w-12 rounded-md p-2">
         <Bell className="h-full w-full scale-90 text-stone-600 transition hover:rotate-12 hover:scale-100 motion-safe:duration-300" />
       </div>
-    </aside>
+    </header>
   );
 };

@@ -24,7 +24,7 @@ import { Separator, SeparatorWithText } from "./ui/separator";
 import { Input } from "./ui/input";
 import { defaultFieldValues } from "~/context/ProfileProvider";
 import type { FCProps, RoleType } from "~/types";
-import { type FormSchema, formSchema } from "~/lib/schema";
+import { type AuthFormSchema, authFormSchema } from "~/lib/schema";
 
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,12 +39,12 @@ export const ProfileForm: FCProps<{ role: RoleType }> = ({
   children: trigger,
   role,
 }) => {
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<AuthFormSchema>({
+    resolver: zodResolver(authFormSchema),
     defaultValues: { ...defaultFieldValues, role: role },
   });
 
-  const onSubmit: SubmitHandler<FormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<AuthFormSchema> = async (data) => {
     console.log(data);
     const { email } = data;
     await signIn("email", { email });
@@ -97,7 +97,7 @@ export const ProfileForm: FCProps<{ role: RoleType }> = ({
         <SeparatorWithText className="opacity-80">or</SeparatorWithText>
 
         <SmartButton
-          onClick={() => signIn("google")}
+          onClick={async () => await signIn("google")}
           className="h-[6%]"
           variant="outline"
           type="submit"
@@ -124,8 +124,8 @@ export const ProfileForm: FCProps<{ role: RoleType }> = ({
 };
 
 const Field: FCProps<{
-  control: Control<FormSchema>;
-  name: FieldName<FormSchema>;
+  control: Control<AuthFormSchema>;
+  name: FieldName<AuthFormSchema>;
   label: string;
   description: string;
   example: string;

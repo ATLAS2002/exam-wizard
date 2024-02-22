@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { RoleType } from "~/types";
 
-export const formSchema = z.object({
+export const authFormSchema = z.object({
   role: z.nativeEnum(RoleType),
   name: z
     .string()
@@ -21,4 +21,18 @@ export const formSchema = z.object({
   }),
 });
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type AuthFormSchema = z.infer<typeof authFormSchema>;
+
+export const roleFormSchema = z.object({
+  name: z
+    .string()
+    .max(20, { message: "Name too long, try using an abbereviated version" })
+    .min(2, { message: "Name is too short" }),
+  description: z
+    .string()
+    .max(50, { message: "Description can not be too long" })
+    .optional(),
+  permissions: z.array(z.number()).min(1, { message: "Too less permissions!" }),
+});
+
+export type RoleFormSchema = z.infer<typeof roleFormSchema>;
